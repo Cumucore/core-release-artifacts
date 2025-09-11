@@ -1,0 +1,32 @@
+name: Artifacts Downloader
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-downloader:
+    runs-on: ubuntu-latest
+    environment: TOKENS   # required for GH_TOKEN secret
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (jq, curl)
+        run: sudo apt-get update && sudo apt-get install -y jq curl
+
+      - name: Make script executable
+        run: chmod +x artifacts-downloader.sh
+
+      - name: Run artifacts downloader
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: ./artifacts-downloader.sh
+
+      - name: Upload 5.6-artifacts as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 5.6-artifacts
+          path: 5.6-artifacts/
