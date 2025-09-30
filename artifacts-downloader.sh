@@ -2,11 +2,10 @@
 
 set -euo pipefail       # Exit on error, undefined variable, or error in pipeline
 
-ARTIFACTS_DIR="./5.6-artifacts"
+ARTIFACTS_DIR="./4.3-artifacts"
 GITHUB_REPO_OWNER="Cumucore"
 GITHUB_REPOS=(
-    "AMF" "CNC-API" "LicenceAF" "NSACF" "NWDAF" "SA_GUI_Console" "SMF"
-    "fgcalarm" "nfausf" "nfnef" "nfnrfapi" "nfnssf" "nfsepp" "nfudm" "nfudr" "pcf-cumu"
+    "MME" "CNC-API" "LicenceAF" "SGW-C" "NWDAF" "SA_GUI_Console" "fgcalarm" "hss" "nfnrfapi"
 )
 
 # Function to log messages with timestamp
