@@ -73,9 +73,18 @@ process_repo() {
 	log "[Progress: $current_repo/$total_repos] Processing $repo"
 	log "==== Processing repository: $repo ===="
 	local last_run_id=$(get_last_run_id "$repo")
-	local latest_run_id=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-		"https://api.github.com/repos/$GITHUB_REPO_OWNER/$repo/actions/runs?per_page=1" |
-		jq -r '.workflow_runs[0].id')
+
+	local branch=""
+	if [[ "$repo" == "NWDAF" || "$repo" == "LicenceAF" ]]; then
+		branch="5.6"
+	fi
+
+	local api_url="https://api.github.com/repos/$GITHUB_REPO_OWNER/$repo/actions/runs?per_page=1"
+	if [ -n "$branch" ]; then
+		api_url+="&branch=$branch"
+	fi
+
+	local latest_run_id=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$api_url" | jq -r '.workflow_runs[0].id')
 
 	if [ -z "$latest_run_id" ] || [ "$latest_run_id" = "null" ]; then
 		log "  No workflow runs found for $repo. Skipping."
@@ -167,3 +176,6 @@ log "\nAll artifacts processed in $ARTIFACTS_DIR."
 END_TIME=$(date +%s)
 DURATION=$((END_TIME - START_TIME))
 log "Total time taken: ${DURATION} seconds."
+
+
+# NWDAF, LAF
