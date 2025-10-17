@@ -3,7 +3,7 @@ name: Artifacts Downloader
 on:
   push:
     branches:
-      - "5.6-release-artifacts"
+      - "4.3-release-artifacts"
   schedule:
     - cron: '0 */3 * * *'
   workflow_dispatch:
@@ -26,8 +26,8 @@ jobs:
       - name: Run artifacts downloader
         run: ./artifacts-downloader.sh ${{ secrets.GH_TOKEN }}
 
-      - name: Upload 5.6-artifacts as workflow artifact
+      - name: Upload 4.3-artifacts as workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: 5.6-artifacts
-          path: 5.6-artifacts/
+          name: 4.3-artifacts
+          path: 4.3-artifacts/
