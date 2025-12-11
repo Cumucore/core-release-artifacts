@@ -75,7 +75,7 @@ process_repo() {
 	local last_run_id=$(get_last_run_id "$repo")
 
 	local branch=""
-	if [[ "$repo" == "NWDAF" || "$repo" == "LicenceAF" ]]; then
+	if [[ "$repo" == "NWDAF" || "$repo" == "LicenceAF" || "$repo" == "SA_GUI_Console" || "$repo" == "CNC-API" ]]; then
 		branch="5.6"
 	fi
 
